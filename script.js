@@ -2,9 +2,12 @@
 var area;
 
 //Components
+var player;
 
 function startGame() {
   gameArea.start();
+  
+  player = new component(30, 30, "blue", 100, 10, 1, 100);
   
   area = 1;
 }
@@ -17,6 +20,16 @@ var gameArea = {
     this.context = this.canvas.getContext("2d");
     document.body.insertBefore(this.canvas, document.body.childNodes[0]);
     window.setInterval(updateGame, 10);
+    
+    //Events
+    window.addEventListener("mousedown", function (e) {
+      gameArea.x = e.pageX;
+      gameArea.y = e.pageY;
+    });
+    window.addEventListener("mouseup", function (e) {
+      gameArea.x = false;
+      gameArea.y = false;
+    });
   },
   clear : function() {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -49,7 +62,33 @@ function component(width, height, color, x, y, rotation, health, type) {
   this.newPos = function() {
     this.x += this.speedX;
     this.y += this.speedY;
-  }
+  };
+  this.clicked = function() {
+    var myleft = this.x;
+    var myright = this.x + (this.width);
+    var mytop = this.y;
+    var mybottom = this.y + (this.height);
+    var clicked = true;
+    if ((mybottom < gameArea.y) || (mytop > gameArea.y) || (myright < gameArea.x) || (myleft > gameArea.x)) {
+      clicked = false;
+    }
+    return clicked;
+  };
+  this.crashWith = function(otherobj) {
+    var myleft = this.x;
+    var myright = this.x + (this.width);
+    var mytop = this.y;
+    var mybottom = this.y + (this.height);
+    var otherleft = otherobj.x;
+    var otherright = otherobj.x + (otherobj.width);
+    var othertop = otherobj.y;
+    var otherbottom = otherobj.y + (otherobj.height);
+    var crash = true;
+    if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+      crash = false;
+    }
+    return crash;
+  };
 }
 
 function updateGame() {
@@ -61,5 +100,5 @@ function updateGame() {
 }
 
 function city() {
-  
+  player.update();
 }
