@@ -17,6 +17,11 @@ function startGame() {
   area = 1;
 }
 
+function test() {
+  alert("yeet");
+  confirm("Sup Boi")
+}
+
 var gameArea = {
   canvas : document.createElement("canvas"),
   start : function() {
