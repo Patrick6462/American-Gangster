@@ -5,4 +5,11 @@ body {
 canvas {
   border: 1px solid black;
   border-radius: 10px;
+  opacity: 0.8;
+}
+
+#stats {
+  position: absolute;
+  top: 50px;
+  right: 225px;
 }
