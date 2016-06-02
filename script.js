@@ -1,6 +1,11 @@
 
 var area;
 
+var money;
+var ammo;
+var pos1;
+var pos2;
+
 //Components
 var player;
 
@@ -97,8 +102,18 @@ function updateGame() {
   if (area == 1) {
     city();
   }
+  
+  document.getElementById("money").innerHTML = "$" + money;
+  document.getElementById("ammo").innerHTML = "Ammo: " + ammo;
 }
 
 function city() {
+  pos1 = player.x;
+  pos2 = player.y;
+  
   player.update();
+  
+  document.getElementById("health2").style.width = player.health;
+  document.getElementById("pos1").innerHTML = "X Position: " + pos1;
+  document.getElementById("pos2").innerHTML = "Y Position: " + pos2;
 }
